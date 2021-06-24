@@ -1,0 +1,56 @@
+<html
+        lang="en"
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<!-- ============================================================== -->
+<!-- left sidebar -->
+<!-- ============================================================== -->
+<div class="nav-left-sidebar sidebar-dark navbar-dark bg-dark" th:fragment="leftMenu">
+    <div class="menu-list">
+        <meta charset="UTF-8">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="d-xl-none d-lg-none" href="#">Dashboard</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav flex-column">
+                    <li class="nav-divider">
+
+                    </li>
+                    <li class="nav-item ">
+                        <div>
+                            <ul class="nav flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link" data-th-text="#{leftMenu.label.clients}"
+                                       th:href="@{/client/list}"></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link"  th:href="@{/organization/list}">Заявки для займа</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" th:href="@{/product/list}">Получили сумму</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" th:href="@{/category/list}">Просрочки </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" th:href="@{/unit/list}">Оплатили</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- end left sidebar -->
+<!-- ============================================================== -->
+</html>

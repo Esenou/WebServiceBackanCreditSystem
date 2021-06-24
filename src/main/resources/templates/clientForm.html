@@ -1,0 +1,112 @@
+<!doctype html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layout}" lang="en">
+<head>
+    <title th:text="${client} ? ${client.firstName} : #{client.label.create}"></title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="section-block" id="basicform">
+            <h2 class="section-title"
+                th:text="${add} ? #{client.label.create} : #{clientDetailPage.label.update} + ' ' + ${client.firstName} + ' ' + ${client.lastName} "></h2>
+            <p th:if="${!add}" th:text=" #{label.created_date} + ' ' + ${#temporals.format(client.createDate, 'dd-MM-yyyy HH:mm')}"></p>
+            <p style="color:red;" th:text="${has_exception} ? ${exception_text} : ''"></p>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <form action="#" th:action="${add} ? @{create} : @{/client/update/{id}(id = ${client.id})}"
+                      th:object="${client}"
+                      method="POST">
+                    <div class="form-group">
+                        <label for="code" class="text-dark font-bold" data-th-text="#{clientDetailPage.label.name}"></label>
+                        <input id="code" type="text" class="form-control"
+                               th:value="${client} ? ${client.name} : ' '"
+                               th:field="*{name}">
+                        <p th:if="${#fields.hasErrors('name')}" style="color:red;"
+                           th:errors="*{name}">Incorrect LP</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="firstName" class="text-dark font-bold" data-th-text="#{clientDetailPage.label.first_name}"></label>
+                        <input id="firstName" type="text" class="form-control"
+                               th:value="${client} ? ${client.firstName} : ' '"
+                               th:field="*{firstName}">
+                        <p th:if="${#fields.hasErrors('firstName')}" style="color:red;"
+                           th:errors="*{firstName}">Incorrect LP</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName" class="text-dark font-bold" data-th-text="#{clientDetailPage.label.last_name}"></label>
+                        <input id="lastName" type="text" class="form-control"
+                               th:value=" ${client} ? ${client.lastName} : '' "
+                               th:field="*{lastName}"/>
+                        <p th:if="${#fields.hasErrors('lastName')}" style="color:red;"
+                           th:errors="*{lastName}">Incorrect LP</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email" class="text-dark font-bold" data-th-text="#{clientDetailPage.label.email}"></label>
+                        <input id="email" type="text" class="form-control"
+                               th:value=" ${email} ? ${client.email} : '' "
+                               th:field="*{email}"/>
+                        <p th:if="${#fields.hasErrors('email')}" style="color:red;"
+                           th:errors="*{email}">Incorrect LP</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phoneNo" class="text-dark font-bold" data-th-text="#{clientDetailPage.label.phoneNo}"></label>
+                        <input id="phoneNo" type="text" class="form-control"
+                               th:value=" ${phoneNo} ? ${client.phoneNo} : '' "
+                               th:field="*{phoneNo}"/>
+                        <p th:if="${#fields.hasErrors('phoneNo')}" style="color:red;"
+                           th:errors="*{phoneNo}">Incorrect LP</p>
+                    </div>
+
+                    <div class="form-group">
+
+                        <label class="text-danger font-bold" for="input-select" data-th-text="#{clientDetailPage.label.status}">Status</label>
+                        <select th:field="*{status}" class="form-control" id="input-select" >
+                            <!--list of organization categories-->
+                            <option th:each="i : ${status}" th:value="${i}"
+                                    th:text="${i}">
+                            </option>
+                        </select>
+                    </div>
+
+                    <button th:text="${add} ? #{button.label.create} : #{button.label.update} "
+                            th:class="${add} ? 'btn btn-success': 'btn btn-info' "
+                            type="submit" class="btn btn-success" data-toggle="tooltip"
+                            data-placement="top" title="Tooltip on top" >
+                    </button>
+                    <a type="button" th:style="${add} ? 'visibility:hidden' : ''" class="btn btn-danger"
+                       data-toggle="modal" th:attr="data-target='#recordDeleteModal'+${client.id}" data-th-text="#{button.label.delete}"></a>
+                </form>
+                <!-- Modal -->
+                <div class="modal fade" th:attr="id='recordDeleteModal'+${client.id}" tabindex="-1" role="dialog"
+                     aria-labelledby="recordDeleteModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="recordDeleteModalLabel" data-th-text="#{button.label.delete_message}"></h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <label data-th-text="#{clientDetailPage.label.confirm_to_delete}"></label>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal" data-th-text="#{label.no}"></button>
+                                <form th:action="${add} ? @{/client/2} : @{/client/delete/{id}(id = ${client.id})}"
+                                      th:object="${client}" th:method="${add} ? 'GET' : 'POST'">
+                                    <button type="submit" class="btn btn-primary" data-th-text="#{label.yes}"></button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
