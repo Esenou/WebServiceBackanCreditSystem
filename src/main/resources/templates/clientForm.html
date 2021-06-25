@@ -9,7 +9,12 @@
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="section-block" id="basicform">
             <h2 class="section-title"
-                th:text="${add} ? #{client.label.create} : #{clientDetailPage.label.update} + ' ' + ${client.firstName} + ' ' + ${client.lastName} "></h2>
+                th:text="${add} ? #{client.label.create} : #{clientDetailPage.label.update} + ' ' + ${client.firstName} + ' ' + ${client.lastName} ">
+            </h2>
+
+<!--            <button type="button" th:href="@{/clientPersonalInfo}" class="btn btn-info m-t-10 float-none" data-th-text="#{clientList.button.label.personalInfo}"></button>-->
+            <a th:href="@{/additionalInfo/createAddInfo/{id}(id = ${client.id}})}" class="btn btn-info m-t-10 float-none" data-th-text="#{clientList.button.label.additionalInfo}"></a>
+
             <p th:if="${!add}" th:text=" #{label.created_date} + ' ' + ${#temporals.format(client.createDate, 'dd-MM-yyyy HH:mm')}"></p>
             <p style="color:red;" th:text="${has_exception} ? ${exception_text} : ''"></p>
         </div>
