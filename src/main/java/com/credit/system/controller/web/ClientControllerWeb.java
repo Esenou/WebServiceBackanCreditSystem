@@ -1,6 +1,6 @@
 package com.credit.system.controller.web;
 
-import com.credit.system.controller.HomeController;
+
 import com.credit.system.entity.Client;
 import com.credit.system.enums.ListStatus;
 import com.credit.system.service.ClientService;
@@ -14,9 +14,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Controller
 @RequestMapping("client")
@@ -50,6 +47,7 @@ public class ClientControllerWeb {
         return "clientForm";
     }
 
+
     @PostMapping("delete/{id}")
     public String deleteById(@PathVariable("id") Long id, RedirectAttributes redirectAttributes){
         try {
@@ -74,4 +72,8 @@ public class ClientControllerWeb {
         clientService.update(user);
         return "redirect:/client/list";
     }
+
+
+    //-------------------------------------------------------------------------------------------------
+
 }

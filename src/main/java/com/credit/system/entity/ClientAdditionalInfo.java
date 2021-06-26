@@ -13,28 +13,28 @@ import javax.persistence.*;
 public class ClientAdditionalInfo extends BaseEntity {
 
     @Column(name = "place_of_work")
-    String placeOfWork;
+    private String placeOfWork;
 
     @Column(name = "position")
-    String position;
+    private String position;
 
     @Column(name = "income")
-    String income;
+    private String income;
 
     @Column(name = "expenses")
-    String expenses;
+    private String expenses;
 
     @Column(name = "address")
-    String address;
+    private String address;
 
     @Column(name = "physical_address")
-    String physicalAddress;
+    private String physicalAddress;
 
     @Enumerated(EnumType.STRING)
     @JoinColumn(name = "marital_status")
-    MaritalStatus maritalStatus;
+    private MaritalStatus maritalStatus;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_client")
-    Client client;
+    private Client client;
 }

@@ -23,33 +23,4 @@ public class ClientAdditionalInfoController extends BaseController<ClientAdditio
         super(service);
     }
 
-    @Autowired
-    private ClientAdditionalInfoService clientAdditionalInfoService;
-
-    @Autowired
-    private ClientService clientService;
-
-    @GetMapping("{/creatAddInfo/{id}}")
-    public String getClientById(@PathVariable("id") Long id, Model model){
-
-        Client client = clientService.findById(id);
-        ClientAdditionalInfo clientAdditionalInfo = new ClientAdditionalInfo();
-        model.addAttribute("status", MaritalStatus.values());
-        model.addAttribute("clientAdditionalInfo",clientAdditionalInfo);
-        model.addAttribute("client", client);
-
-        return "createAdditionalInfo";
-    }
-
-    @PostMapping("/update/{id}")
-    public String updateClient(@PathVariable("id") Long id, Model model, @ModelAttribute("clientAdInfo") ClientAdditionalInfo newInfo, BindingResult result) {
-        if(result.hasErrors()){
-            model.addAttribute("add", false);
-            model.addAttribute(newInfo);
-        }
-        ClientAdditionalInfo oldInfo =  clientAdditionalInfoService.findById(id);
-        clientAdditionalInfoService.update(newInfo);
-        return "redirect:/client/list";
-    }
-
 }
