@@ -1,5 +1,6 @@
 package com.credit.system.controller.web;
 
+
 import com.credit.system.controller.common.ClientAdditionalInfoController;
 import com.credit.system.entity.Client;
 import com.credit.system.entity.ClientAdditionalInfo;
@@ -14,11 +15,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+
 
 
 @Controller
 @RequestMapping("additionalInfo")
 public class ClientAdditionalInfoControllerWeb {
+
 
     private ClientAdditionalInfoService clientAdditionalInfoService;
     private ClientService clientService;
@@ -29,37 +34,69 @@ public class ClientAdditionalInfoControllerWeb {
     }
 
 
-    @GetMapping("{/creatAddInfo/{id}}")
-    public String addInfo(@PathVariable("id") Long id, Model model){
-
-        ClientAdditionalInfo clientAdditionalInfo = new ClientAdditionalInfo();
-        model.addAttribute("status", ListStatus.values());
-        model.addAttribute("clientAdditionalInfo",clientAdditionalInfo);
-
-        return "createAdditionalInfo";
-    }
-
-    @GetMapping("{id}")
-    public String AdditionalInfo(@PathVariable("id") Long id, Model model){
-
-        Client client = clientService.findById(id);
-        ClientAdditionalInfo clientAdditionalInfo = clientAdditionalInfoService.findById(id);
-        model.addAttribute("status", MaritalStatus.values());
-        model.addAttribute("client", client);
-        model.addAttribute("clientAdditionalInfo",clientAdditionalInfo);
-        model.addAttribute("add",true);
-        return "clientAdditionalInfo";
-    }
 
 
-    @PostMapping("/updateAddInfo/{id}")
-    public String updateClientAddInfo(@PathVariable("id") Long id, Model model, @ModelAttribute("clientAdInfo") ClientAdditionalInfo newInfo, BindingResult result) {
+    @PostMapping("{/create/{id}")
+    public String addInfo(@PathVariable("id") Long id, Model model,  @ModelAttribute("clientAdditionalInfo") ClientAdditionalInfo newInfo, BindingResult result){
         if(result.hasErrors()){
             model.addAttribute("add", false);
             model.addAttribute(newInfo);
         }
-        ClientAdditionalInfo oldInfo =  clientAdditionalInfoService.findById(id);
+
+        newInfo.setClient(clientService.findById(id));
+        clientAdditionalInfoService.create(newInfo);
+        return "redirred:/{id}";
+    }
+
+
+    @GetMapping("{id}")
+    public String AdditionalInfo(@PathVariable("id") Long id, Model model){
+
+
+        Client client = clientService.findById(id);
+        ClientAdditionalInfo clientAdditionalInfo = clientAdditionalInfoService.findByClientId(id);
+
+
+        if(clientAdditionalInfo == null){
+            model.addAttribute("status", MaritalStatus.values());
+            model.addAttribute("client", client);
+            model.addAttribute("clientAdditionalInfo",new ClientAdditionalInfo());
+            model.addAttribute("add",true);
+        } else {
+            model.addAttribute("status", MaritalStatus.values());
+            model.addAttribute("client", client);
+            model.addAttribute("clientAdditionalInfo",clientAdditionalInfo);
+            model.addAttribute("add",false);
+        }
+
+
+        return "clientAdditionalInfo";
+    }
+
+
+
+
+    @PostMapping("/updateAddInfo/{id}")
+    public String updateClientAddInfo(@PathVariable("id") Long id
+            , Model model
+            , @ModelAttribute("clientAdditionalInfo") ClientAdditionalInfo newInfo) {
+
+        newInfo.setId(id);
         clientAdditionalInfoService.update(newInfo);
         return "redirect:/client/list";
     }
+
+
+    @PostMapping("delete/{id}")
+    public String deleteById(@PathVariable("id") Long id, RedirectAttributes redirectAttributes){
+        try {
+            clientService.deleteById(id);
+        }catch (Exception e){
+            redirectAttributes.addFlashAttribute("has_exception", true);
+            return "redirect:/client/" + id;
+        }
+        return "redirect:/client/list";
+    }
+
+
 }
