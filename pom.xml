@@ -13,10 +13,19 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>system</name>
     <description>backand</description>
+    <packaging>war</packaging>
     <properties>
+
         <java.version>1.8</java.version>
     </properties>
     <dependencies>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -97,6 +106,8 @@
     </dependencies>
 
     <build>
+
+        <finalName>bankCreditSystem</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
