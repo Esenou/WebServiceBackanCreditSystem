@@ -58,12 +58,12 @@ public class ClientAdditionalInfoControllerWeb {
 
 
         if(clientAdditionalInfo == null){
-            model.addAttribute("status", MaritalStatus.values());
+            model.addAttribute("maritalStatus", MaritalStatus.values());
             model.addAttribute("client", client);
             model.addAttribute("clientAdditionalInfo",new ClientAdditionalInfo());
             model.addAttribute("add",true);
         } else {
-            model.addAttribute("status", MaritalStatus.values());
+            model.addAttribute("maritalStatus", MaritalStatus.values());
             model.addAttribute("client", client);
             model.addAttribute("clientAdditionalInfo",clientAdditionalInfo);
             model.addAttribute("add",false);
@@ -78,14 +78,16 @@ public class ClientAdditionalInfoControllerWeb {
 
     @PostMapping("/updateAddInfo/{id}")
     public String updateClientAddInfo(@PathVariable("id") Long id
-            , Model model
-            , @ModelAttribute("clientAdditionalInfo") ClientAdditionalInfo newInfo) {
-
-        newInfo.setId(id);
+            ,@ModelAttribute("client") Client client
+            , @ModelAttribute("clientAdditionalInfo") ClientAdditionalInfo newInfo
+           ) {
+        ClientAdditionalInfo oldClientInfo = clientAdditionalInfoService.findById(id);
+        newInfo.setId(oldClientInfo.getId());
+        newInfo.setCreateDate(oldClientInfo.getCreateDate());
+        newInfo.setClient(client);
         clientAdditionalInfoService.update(newInfo);
-        return "redirect:/client/list";
+        return "redirect:/client/" + client.getId();
     }
-
 
     @PostMapping("delete/{id}")
     public String deleteById(@PathVariable("id") Long id, RedirectAttributes redirectAttributes){

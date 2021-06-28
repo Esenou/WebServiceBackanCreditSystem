@@ -4,7 +4,9 @@ import com.credit.system.entity.Client;
 import com.credit.system.service.ClientPasswordService;
 import com.credit.system.service.ClientService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -22,8 +24,8 @@ public class ClientPasswordControllerWeb {
 
 
 
-    @GetMapping("")
-    private String getClientPasswordInfo(){
+    @GetMapping("{id}")
+    private String getClientPasswordInfo(@PathVariable("id") long id, Model model){
 
 
 
