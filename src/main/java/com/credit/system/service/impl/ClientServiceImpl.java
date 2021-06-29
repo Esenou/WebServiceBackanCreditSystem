@@ -1,7 +1,6 @@
 package com.credit.system.service.impl;
 
 import com.credit.system.entity.Client;
-import com.credit.system.entity.ClientPassword;
 import com.credit.system.repo.ClientRepo;
 import com.credit.system.service.ClientService;
 import com.credit.system.service.base.BaseServiceImpl;
