@@ -32,7 +32,12 @@ public class ClientAdditionalInfoControllerWeb {
     @GetMapping("{id}")
     public String getClientAdditionalInfo(@PathVariable("id") Long id, Model model) {
 
+
         ClientAdditionalInfo clientAdditionalInfo = clientAdditionalInfoService.findByClientId(id);
+
+        if(clientAdditionalInfo == null){
+            return "redirect:/client/" + id;
+        }
         model.addAttribute("clientAdditionalInfo", clientAdditionalInfo);
         model.addAttribute("add", false);
 
@@ -43,11 +48,11 @@ public class ClientAdditionalInfoControllerWeb {
     @PostMapping("/updateAddInfo/{id}")
     public String updateClientAddInfo(@PathVariable("id") Long id
             , @ModelAttribute("client") Client client, Model model
-            , @ModelAttribute("clientAdditionalInfo") ClientAdditionalInfo newInfo,BindingResult result
+            , @ModelAttribute("clientAdditionalInfo") ClientAdditionalInfo newInfo, BindingResult result
     ) {
 
         ClientAdditionalInfo oldClientInfo = clientAdditionalInfoService.findById(id);
-        if(result.hasErrors()){
+        if (result.hasErrors()) {
             model.addAttribute("clientAdditionalInfo", oldClientInfo);
             model.addAttribute("add", false);
         }

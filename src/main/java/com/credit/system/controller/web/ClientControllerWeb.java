@@ -21,8 +21,10 @@ import java.time.LocalDateTime;
 @Controller
 @RequestMapping("client")
 public class ClientControllerWeb {
+
     private final ClientService clientService;
     private static final Logger logger = LogManager.getLogger(ClientControllerWeb.class);
+
     public ClientControllerWeb(ClientService clientService) {
         this.clientService = clientService;
     }
@@ -31,7 +33,6 @@ public class ClientControllerWeb {
     public String getClientList(@PageableDefault(5) Pageable pageable,
                                 @RequestParam(value = "search", required = false) String username, Model model){
         Page<Client> clients;
-        logger.error("sfdsfdsfdsf "+username);
         if(username != null){
             clients = clientService.findByName(pageable,username);
         } else {
