@@ -9,7 +9,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ClientPasswordRepo extends BaseRepository<ClientPassword>{
 
-    Page<ClientPassword> findByClient_NameAndClient_Id(Long clientId, Pageable pageable, String username);
-
-    Page<ClientPassword> findByClient_Id(Long clientId, Pageable pageable);
+    ClientPassword findByClientId(long id);
 }

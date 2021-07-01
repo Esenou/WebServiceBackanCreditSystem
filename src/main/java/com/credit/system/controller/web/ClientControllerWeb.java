@@ -19,7 +19,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Controller
-@RequestMapping("client")
+@RequestMapping("/client")
 public class ClientControllerWeb {
 
     private final ClientService clientService;
