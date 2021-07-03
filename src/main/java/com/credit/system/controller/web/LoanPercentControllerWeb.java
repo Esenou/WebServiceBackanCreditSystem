@@ -14,12 +14,12 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/loanPercent")
-public class LoanPercentWeb {
+public class LoanPercentControllerWeb {
 
     private final LoanPercentService loanPercentService;
 
 
-    public LoanPercentWeb(LoanPercentService loanPercentService) {
+    public LoanPercentControllerWeb(LoanPercentService loanPercentService) {
         this.loanPercentService = loanPercentService;
     }
 
