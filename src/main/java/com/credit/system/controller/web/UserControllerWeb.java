@@ -4,6 +4,7 @@ import com.credit.system.entity.Client;
 import com.credit.system.entity.LoanPercent;
 import com.credit.system.entity.User;
 import com.credit.system.enums.ListStatus;
+import com.credit.system.enums.Roles;
 import com.credit.system.service.LoanPercentService;
 import com.credit.system.service.UserService;
 import org.springframework.stereotype.Controller;
@@ -18,9 +19,9 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserControllerWeb {
 
-  //  private final UserService userService;
+    private final UserService userService;
 
-   /* public UserControllerWeb(UserService userService) {
+    public UserControllerWeb(UserService userService) {
         this.userService = userService;
     }
 
@@ -28,62 +29,68 @@ public class UserControllerWeb {
     public String getList(Model model) {
         List<User> userList = userService.findAll();
         model.addAttribute("userList", userList);
-
+        model.addAttribute("status",ListStatus.values());
+        model.addAttribute("roles", Roles.values());
         return "userList";
     }
 
 
     @GetMapping("/form")
-    public String organizationForm(Model model){
-        List<LoanPercent> loanPercent = loanPercentService.findAll();
-        model.addAttribute("loanPercent", loanPercent);
+    public String getForm(Model model){
+        /*List<User> userList = userService.findAll();
+        model.addAttribute("userList", userList);*/
         model.addAttribute("add", true);
-        model.addAttribute("loanPercent", new LoanPercent());
-        return "loanPercentForm";
+        model.addAttribute("user", new User());
+        model.addAttribute("status",ListStatus.values());
+        model.addAttribute("roles", Roles.values());
+        return "userForm";
     }
+
     @GetMapping("{id}")
     public String getById(@PathVariable("id") Long id, Model model){
-        LoanPercent loanPercent = loanPercentService.findById(id);
+        User user = userService.findById(id);
         model.addAttribute("add",false);
-        model.addAttribute("loanPercent",loanPercent);
-        return "loanPercentForm";
+        model.addAttribute("user",user);
+        model.addAttribute("status",ListStatus.values());
+        model.addAttribute("roles", Roles.values());
+        return "userForm";
     }
 
     @PostMapping("delete/{id}")
     public String deleteById(@PathVariable("id") Long id, RedirectAttributes redirectAttributes){
         try {
-            loanPercentService.deleteById(id);
+            userService.deleteById(id);
         }catch (Exception e){
             redirectAttributes.addFlashAttribute("has_exception", true);
-            return "redirect:/loanPercent/" + id;
+            return "redirect:/user/" + id;
         }
-        return "redirect:/loanPercent/list";
+        return "redirect:/user/list";
     }
 
     @PostMapping("/update/{id}")
-    public String update(@PathVariable("id") Long id, Model model, @ModelAttribute("loanPercent") LoanPercent loanPercent, BindingResult result) {
+    public String update(@PathVariable("id") Long id, Model model, @ModelAttribute("user") User user, BindingResult result) {
         if(result.hasErrors()){
             model.addAttribute("add", false);
-            model.addAttribute(loanPercent);
+            model.addAttribute(user);
         }
-        loanPercent.setId(id);
-        loanPercentService.update(loanPercent);
-        return "redirect:/loanPercent/list";
+        user.setId(id);
+        userService.update(user);
+        return "redirect:/user/list";
     }
 
 
 
     @PostMapping("/create")
-    public String create(@ModelAttribute("loanPercent") LoanPercent loanPercent,
+    public String create(@ModelAttribute("user") User user,
                          BindingResult result, Model model){
-       *//* if (result.hasErrors()) {
-            model.addAttribute(category);
-            model.addAttribute("add", true);
-            return "orgCategoryForm";
-        }*//*
-        loanPercentService.create(loanPercent);
-        return "redirect:/loanPercent/list";
-    }*/
+//        if (result.hasErrors()) {
+//            model.addAttribute(category);
+//            model.addAttribute("add", true);
+//            return "orgCategoryForm";
+//        }
+        userService.create(user);
+        return "redirect:/user/list";
+    }
 
 
 
