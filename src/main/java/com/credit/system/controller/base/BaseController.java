@@ -8,7 +8,7 @@ import java.util.List;
 
 public abstract class BaseController<ENTITY extends BaseEntity, SERVICE extends BaseService<ENTITY>> {
 
-    private final SERVICE baseService;
+    protected final SERVICE baseService;
 
     public BaseController(SERVICE service) {
         this.baseService = service;

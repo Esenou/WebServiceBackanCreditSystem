@@ -1,5 +1,6 @@
 package com.credit.system.entity;
 
+import com.credit.system.enums.LoanStatus;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -27,4 +28,10 @@ public class Loan extends BaseEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "loan_discount_id")
     private LoanDiscount loanDiscount;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    private LoanStatus status;
 }

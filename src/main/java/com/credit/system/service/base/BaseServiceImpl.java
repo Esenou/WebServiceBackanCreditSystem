@@ -8,7 +8,7 @@ import java.util.List;
 
 public abstract class BaseServiceImpl<E extends BaseEntity, Repo extends BaseRepository<E>> implements BaseService<E> {
 
-    private final Repo repo;
+    protected final Repo repo;
 
     public BaseServiceImpl(Repo repo) {
         this.repo = repo;
