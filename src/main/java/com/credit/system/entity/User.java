@@ -1,11 +1,12 @@
 package com.credit.system.entity;
 
 import com.credit.system.enums.ListStatus;
+import com.credit.system.enums.Roles;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -17,4 +18,5 @@ public class User extends BaseEntity {
 
     private String fullName;
     private ListStatus status;
+    private Roles role;
 }
