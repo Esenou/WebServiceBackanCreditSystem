@@ -80,7 +80,7 @@
                             data-placement="top" title="Tooltip on top">
                     </button>
                     <a type="button" th:style="${add} ? 'visibility:hidden' : ''" class="btn btn-danger"
-                       data-toggle="modal" th:attr="data-target='#recordDeleteModal'+${loanPercent.id}"
+                       data-toggle="modal" th:attr="data-target='#recordDeleteModal'+${user.id}"
                        data-th-text="#{button.label.delete}"></a>
                 </form>
                 <!-- Modal -->
