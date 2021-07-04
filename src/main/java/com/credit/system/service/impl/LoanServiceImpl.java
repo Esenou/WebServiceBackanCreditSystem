@@ -2,6 +2,7 @@ package com.credit.system.service.impl;
 
 import com.credit.system.dto.Response;
 import com.credit.system.entity.Loan;
+import com.credit.system.entity.LoanPercent;
 import com.credit.system.entity.User;
 import com.credit.system.enums.LoanStatus;
 import com.credit.system.repo.LoanRepo;
@@ -29,7 +30,6 @@ public class LoanServiceImpl extends BaseServiceImpl<Loan, LoanRepo> implements 
     }
 
 
-
     @Override
     public Response updateStatus(Long userId, Long id, LoanStatus status) {
         User user = userService.findById(userId);
@@ -52,11 +52,20 @@ public class LoanServiceImpl extends BaseServiceImpl<Loan, LoanRepo> implements 
 
     @Override
     public Page<Loan> findByClient_NameAndOrderByCreateDateDesc(Pageable pageable, String username) {
-        return loanRepo.findByClient_Name(pageable,username);
+        return loanRepo.findByClient_Name(pageable, username);
     }
 
     @Override
     public Page<Loan> findAllByOrderByCreateDateDesc(Pageable pageable) {
         return loanRepo.findAllByOrderByCreateDateDesc(pageable);
+    }
+
+    @Override
+    public Loan create(Loan dto) {
+        LoanPercent percent = dto.getLoanPercent();
+        Double sumToPay = dto.getSumToGet() + (percent.getValue() * dto.getSumToGet()) / 100;
+        dto.setSumToPay(sumToPay);
+
+        return super.create(dto);
     }
 }
