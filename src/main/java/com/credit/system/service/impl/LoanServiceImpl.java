@@ -9,6 +9,8 @@ import com.credit.system.service.BudgetOperationService;
 import com.credit.system.service.LoanService;
 import com.credit.system.service.UserService;
 import com.credit.system.service.base.BaseServiceImpl;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -17,12 +19,16 @@ public class LoanServiceImpl extends BaseServiceImpl<Loan, LoanRepo> implements 
     private final BudgetOperationService budgetOperationService;
     private final UserService userService;
 
-    public LoanServiceImpl(LoanRepo loanRepo, BudgetOperationService budgetOperationService,
-                           UserService userService) {
+    private final LoanRepo loanRepo;
+
+    public LoanServiceImpl(LoanRepo loanRepo, BudgetOperationService budgetOperationService, UserService userService) {
         super(loanRepo);
         this.budgetOperationService = budgetOperationService;
         this.userService = userService;
+        this.loanRepo = loanRepo;
     }
+
+
 
     @Override
     public Response updateStatus(Long userId, Long id, LoanStatus status) {
@@ -42,5 +48,15 @@ public class LoanServiceImpl extends BaseServiceImpl<Loan, LoanRepo> implements 
         loan.setStatus(status);
         repo.saveAndFlush(loan);
         return new Response(HttpStatus.OK, "Статус обновлен!");
+    }
+
+    @Override
+    public Page<Loan> findByClient_NameAndOrderByCreateDateDesc(Pageable pageable, String username) {
+        return loanRepo.findByClient_Name(pageable,username);
+    }
+
+    @Override
+    public Page<Loan> findAllByOrderByCreateDateDesc(Pageable pageable) {
+        return loanRepo.findAllByOrderByCreateDateDesc(pageable);
     }
 }
