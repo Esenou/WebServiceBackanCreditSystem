@@ -1,10 +1,175 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layout}" lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title></title>
 </head>
-<body>
 
+<body>
+<div layout:fragment="content">
+
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="section-block" id="basicform">
+            <h3 class="section-title" th:text="${add} ? #{createForm.label.create} : #{updateForm.label.update}"></h3>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <form action="#"
+                      th:action="${add} ? @{create} : @{/loan/update/{id}(id = ${loan.id})}"
+                      th:object="${loan}"
+                      method="POST">
+
+                    <div class="form-group">
+                        <label for="firstName" class="text-dark font-bold"
+                               data-th-text="#{loan.label.firstName}"></label>
+                        <input id="firstName" type="text" class="form-control"
+                               th:value="${firstName} ? ${loan.client.firstName} : ' '"
+                               th:field="*{client}">
+                        <p th:if="${#fields.hasErrors('client.firstName')}" style="color:red;"
+                           th:errors="*{client.firstName}">Incorrect LP</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="username" class="text-dark font-bold"
+                               data-th-text="#{user.label.username}"></label>
+                        <input id="username" type="text" class="form-control"
+                               th:value="${name} ? ${loan.client.name} : ' '"
+                               th:field="*{client}">
+                        <p th:if="${#fields.hasErrors('client.name')}" style="color:red;"
+                           th:errors="*{client.name}">Incorrect LP</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="sumToGet" class="text-dark font-bold"
+                               data-th-text="#{loan.label.sumToGet}"></label>
+                        <input id="sumToGet" type="text" class="form-control"
+                               th:value="${sumToGet} ? ${loan.sumToGet} : ' '"
+                               th:field="*{sumToGet}">
+                        <p th:if="${#fields.hasErrors('sumToGet')}" style="color:red;"
+                           th:errors="*{sumToGet}">Incorrect LP</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="dueDate" class="text-dark font-bold"
+                               data-th-text="#{loan.label.dueDate}"></label>
+                        <input id="dueDate" type="text" class="form-control"
+                               th:value="${dueDate} ? ${loan.dueDate} : ' '"
+                               th:field="*{dueDate}">
+                        <p th:if="${#fields.hasErrors('dueDate')}" style="color:red;"
+                           th:errors="*{dueDate}">Incorrect LP</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="sumToPay" class="text-dark font-bold"
+                               data-th-text="#{loan.label.sumToPay}"></label>
+                        <input id="sumToPay" type="text" class="form-control"
+                               th:value="${sumToPay} ? ${loan.sumToPay} : ' '"
+                               th:field="*{sumToPay}">
+                        <p th:if="${#fields.hasErrors('sumToPay')}" style="color:red;"
+                           th:errors="*{sumToPay}">Incorrect LP</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="isFirstTime" class="text-dark font-bold"
+                               data-th-text="#{loan.label.isFirstTime}"></label>
+                        <input id="isFirstTime" type="text" class="form-control"
+                               th:value="${isFirstTime} ? ${loan.isFirstTime} : ' '"
+                               th:field="*{isFirstTime}">
+                        <p th:if="${#fields.hasErrors('isFirstTime')}" style="color:red;"
+                           th:errors="*{isFirstTime}">Incorrect LP</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="loanPercent" class="text-dark font-bold"
+                               data-th-text="#{loan.label.loanPercent}"></label>
+                        <input id="loanPercent" type="text" class="form-control"
+                               th:value="${loanPercent} ? ${loan.loanPercent.loanPercent} : ' '"
+                               th:field="*{loanPercent}">
+                        <p th:if="${#fields.hasErrors('loanPercent')}" style="color:red;"
+                           th:errors="*{loanPercent}">Incorrect LP</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="loanDiscount" class="text-dark font-bold"
+                               data-th-text="#{loan.label.loanDiscount}"></label>
+                        <input id="loanDiscount" type="text" class="form-control"
+                               th:value="${loanDiscount} ? ${loan.loanDiscount.loanDiscount} : ' '"
+                               th:field="*{loanDiscount}">
+                        <p th:if="${#fields.hasErrors('loanPercent')}" style="color:red;"
+                           th:errors="*{loanPercent}">Incorrect LP</p>
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label class="text-danger font-bold" for="input-select"
+                               data-th-text="#{user.label.status}">Status</label>
+                        <select th:field="*{status}" class="form-control" id="input-select">
+                            <option th:each="i : ${status}" th:value="${i}"
+                                    th:text="${i}">
+                            </option>
+                        </select>
+                    </div>
+
+                    <!--<div class="form-group">
+
+                        <label class="text-danger font-bold" for="input-select-employee"
+                               data-th-text="#{loan.label.user}">Employee</label>
+                        <select th:field="*{user}" class="form-control" id="input-select-employee">
+                            <option th:each="i : ${user}" th:value="${user.id}"
+                                    th:text="${i.username}">
+                            </option>
+                        </select>
+                    </div>-->
+
+                    <div class="form-group">
+                        <label for="user" class="text-dark font-bold" data-th-text="#{loan.label.user}"></label>
+                        <input id="user" type="text" class="form-control"
+                               th:value="${user} ? ${user.username} : ' '"
+                               th:field="*{user}">
+                        <p th:if="${#fields.hasErrors('user')}" style="color:red;"
+                           th:errors="*{user}">Incorrect LP</p>
+                    </div>
+
+
+                    <button th:text="${add} ? #{button.label.create} : #{button.label.update} "
+                            th:class="${add} ? 'btn btn-success': 'btn btn-info' "
+                            type="submit" class="btn btn-success" data-toggle="tooltip"
+                            data-placement="top" title="Tooltip on top">
+                    </button>
+                    <a type="button" th:style="${add} ? 'visibility:hidden' : ''" class="btn btn-danger"
+                       data-toggle="modal" th:attr="data-target='#recordDeleteModal'+${loan.id}"
+                       data-th-text="#{button.label.delete}"></a>
+                </form>
+                <!-- Modal -->
+                <div class="modal fade" th:attr="id='recordDeleteModal'+${loan.id}" tabindex="-1"
+                     role="dialog"
+                     aria-labelledby="recordDeleteModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="recordDeleteModalLabel"
+                                    data-th-text="#{button.label.delete_message}"></h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <label data-th-text="#{clientDetailPage.label.confirm_to_delete}"></label>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                        data-th-text="#{label.no}"></button>
+                                <form th:action="${add} ? @{/loan/2} : @{/loan/delete/{id}(id = ${loan.id})}"
+                                      th:object="${loan}" th:method="${add} ? 'GET' : 'POST'">
+                                    <button type="submit" class="btn btn-primary"
+                                            data-th-text="#{label.yes}"></button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal end -->
+
+
+        </div>
+    </div>
+</div>
 </body>
 </html>
