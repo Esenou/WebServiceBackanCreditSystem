@@ -40,6 +40,7 @@ public class LoanPercentControllerWeb {
         model.addAttribute("loanPercent", new LoanPercent());
         return "loanPercentForm";
     }
+
     @GetMapping("{id}")
     public String getById(@PathVariable("id") Long id, Model model){
         LoanPercent loanPercent = loanPercentService.findById(id);
@@ -69,8 +70,6 @@ public class LoanPercentControllerWeb {
         loanPercentService.update(loanPercent);
         return "redirect:/loanPercent/list";
     }
-
-
 
     @PostMapping("/create")
     public String create(@ModelAttribute("loanPercent") LoanPercent loanPercent,

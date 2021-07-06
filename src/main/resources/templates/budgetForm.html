@@ -14,25 +14,6 @@
          th:text=" #{label.created_date} + ' ' + ${#temporals.format(budget.createDate, 'dd-MM-yyyy HH:mm')}"></p>
       <p style="color:#ff0000;" th:text="${has_exception} ? ${exception_text} : ''"></p>
     </div>
-    <div class="section-block" id="basicformButton">
-
-<!--      <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">-->
-<!--        <div class="btn-group mr-2" role="group" aria-label="First group">-->
-<!--          <a class="btn btn-success m-t-10" th:href="@{'/additionalInfo/' + ${client.id}}" data-th-text="#{button.label.additionalInfo}"></a>-->
-<!--        </div>-->
-<!--        <div class="btn-group mr-2" role="group" aria-label="Second group">-->
-<!--          <a class="btn btn-success m-t-10" th:href="@{'/cardInfo/' + ${client.id}}" data-th-text="#{button.label.clientCardInfo}"></a>-->
-<!--        </div>-->
-<!--        <div class="btn-group mr-2" role="group" aria-label="Third group">-->
-<!--          <a class="btn btn-success m-t-10" th:href="@{'/clientPassword/' + ${client.id}}" data-th-text="#{button.label.clientPassword}"></a>-->
-<!--        </div>-->
-<!--        <div class="btn-group mr-2" role="group" aria-label="Fought group">-->
-<!--          <a class="btn btn-success m-t-10" th:href="@{'/clientImage/' + ${client.id}}" data-th-text="#{button.label.clientImage}"></a>-->
-<!--        </div>-->
-<!--      </div>-->
-
-    </div>
-
 
     <div class="card">
       <div class="card-body">
