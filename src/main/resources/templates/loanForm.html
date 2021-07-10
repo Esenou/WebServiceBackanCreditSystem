@@ -23,8 +23,10 @@
                         <label for="firstName" class="text-dark font-bold"
                                data-th-text="#{loan.label.firstName}"></label>
                         <input id="firstName" type="text" class="form-control"
-                               th:value="${firstName} ? ${loan.client.firstName} : ' '"
-                               th:field="*{client}">
+                               th:value="${loan} ? ${loan.client.firstName} : ' '"
+                               th:field="*{client}"
+                               >
+                        <input type="text" th:id="${'users'+__${rowStat.index}__+'.displayName'}" th:name="${'users['+__${rowStat.index}__+'].displayName'}" th:value="${u.displayName}" readonly="readonly" hidden="hidden" disabled="disabled"/>
                         <p th:if="${#fields.hasErrors('client.firstName')}" style="color:red;"
                            th:errors="*{client.firstName}">Incorrect LP</p>
                     </div>
@@ -33,7 +35,7 @@
                         <label for="username" class="text-dark font-bold"
                                data-th-text="#{user.label.username}"></label>
                         <input id="username" type="text" class="form-control"
-                               th:value="${name} ? ${loan.client.name} : ' '"
+                               th:value="${loan} ? ${loan.client.name} : ' '"
                                th:field="*{client}">
                         <p th:if="${#fields.hasErrors('client.name')}" style="color:red;"
                            th:errors="*{client.name}">Incorrect LP</p>

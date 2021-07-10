@@ -2,93 +2,69 @@
 <html xmlns:layout="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml"
       layout:decorate="~{layout}" lang="en">
 <head>
-<!--  <title th:text="${client} ? ${client.firstName} : #{client.label.create}"></title>-->
+    <title></title>
 </head>
 <body>
 <div layout:fragment="content">
-  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-    <div class="section-block" id="basicform">
-      <h2 class="section-title"
-          th:text="${add} ? #{client.label.create} : #{clientDetailPage.label.update} + 'budget' "></h2>
-      <p th:if="${!add}"
-         th:text=" #{label.created_date} + ' ' + ${#temporals.format(budget.createDate, 'dd-MM-yyyy HH:mm')}"></p>
-      <p style="color:#ff0000;" th:text="${has_exception} ? ${exception_text} : ''"></p>
-    </div>
-    <div class="section-block" id="basicformButton">
-
-<!--      <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">-->
-<!--        <div class="btn-group mr-2" role="group" aria-label="First group">-->
-<!--          <a class="btn btn-success m-t-10" th:href="@{'/additionalInfo/' + ${client.id}}" data-th-text="#{button.label.additionalInfo}"></a>-->
-<!--        </div>-->
-<!--        <div class="btn-group mr-2" role="group" aria-label="Second group">-->
-<!--          <a class="btn btn-success m-t-10" th:href="@{'/cardInfo/' + ${client.id}}" data-th-text="#{button.label.clientCardInfo}"></a>-->
-<!--        </div>-->
-<!--        <div class="btn-group mr-2" role="group" aria-label="Third group">-->
-<!--          <a class="btn btn-success m-t-10" th:href="@{'/clientPassword/' + ${client.id}}" data-th-text="#{button.label.clientPassword}"></a>-->
-<!--        </div>-->
-<!--        <div class="btn-group mr-2" role="group" aria-label="Fought group">-->
-<!--          <a class="btn btn-success m-t-10" th:href="@{'/clientImage/' + ${client.id}}" data-th-text="#{button.label.clientImage}"></a>-->
-<!--        </div>-->
-<!--      </div>-->
-
-    </div>
-
-
-    <div class="card">
-      <div class="card-body">
-        <form action="#" th:action="${add} ? @{create} : @{/budget/update/{id}(id = ${budget.id})}"
-              th:object="${budget}"
-              method="POST">
-
-          <div class="form-group">
-            <label for="code" class="text-dark font-bold"
-                   data-th-text="#{budget.label.sum}"></label>
-            <input id="code" type="text" class="form-control"
-                   th:value="${budget} ? ${budget.sum} : ' '"
-                   th:field="*{sum}">
-            <p th:if="${#fields.hasErrors('sum')}" style="color:red;"
-               th:errors="*{sum}">Incorrect LP</p>
-          </div>
-
-
-          <button th:text="${add} ? #{button.label.create} : #{button.label.update} "
-                  th:class="${add} ? 'btn btn-success': 'btn btn-info' "
-                  type="submit" class="btn btn-success" data-toggle="tooltip"
-                  data-placement="top" title="Tooltip on top">
-          </button>
-          <a type="button" th:style="${add} ? 'visibility:hidden' : ''" class="btn btn-danger"
-             data-toggle="modal" th:attr="data-target='#recordDeleteModal'+${budget.id}"
-             data-th-text="#{button.label.delete}"></a>
-        </form>
-        <!-- Modal -->
-        <div class="modal fade" th:attr="id='recordDeleteModal'+${budget.id}" tabindex="-1" role="dialog"
-             aria-labelledby="recordDeleteModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="recordDeleteModalLabel"
-                    data-th-text="#{button.label.delete_message}"></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <label data-th-text="#{clientDetailPage.label.confirm_to_delete}"></label>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                        data-th-text="#{label.no}"></button>
-                <form th:action="${add} ? @{/budget/2} : @{/budget/delete/{id}(id = ${budget.id})}"
-                      th:object="${budget}" th:method="${add} ? 'GET' : 'POST'">
-                  <button type="submit" class="btn btn-primary" data-th-text="#{label.yes}"></button>
-                </form>
-              </div>
-            </div>
-          </div>
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="section-block" id="basicform">
+            <h3 class="section-title" th:text="${add} ? #{createForm.label.create} : #{budget.label.update}"></h3>
         </div>
-      </div>
+        <div class="card">
+            <div class="card-body">
+                <form action="#" th:action="${add} ? @{create} : @{/budget/update/{id}(id = ${budget.id})}"
+                      th:object="${budget}"
+                      method="POST">
+
+                    <div class="form-group">
+                        <label for="code" class="text-dark font-bold"
+                               data-th-text="#{budget.label.sum}"></label>
+                        <input id="code" type="text" class="form-control"
+                               th:value="${budget} ? ${budget.sum} : ' '"
+                               th:field="*{sum}">
+                        <p th:if="${#fields.hasErrors('sum')}" style="color:red;"
+                           th:errors="*{sum}">Incorrect LP</p>
+                    </div>
+
+
+                    <button th:text="${add} ? #{button.label.create} : #{button.label.update} "
+                            th:class="${add} ? 'btn btn-success': 'btn btn-info' "
+                            type="submit" class="btn btn-success" data-toggle="tooltip"
+                            data-placement="top" title="Tooltip on top">
+                    </button>
+                    <a type="button" th:style="${add} ? 'visibility:hidden' : ''" class="btn btn-danger"
+                       data-toggle="modal" th:attr="data-target='#recordDeleteModal'+${budget.id}"
+                       data-th-text="#{button.label.delete}"></a>
+                </form>
+                <!-- Modal -->
+                <div class="modal fade" th:attr="id='recordDeleteModal'+${budget.id}" tabindex="-1" role="dialog"
+                     aria-labelledby="recordDeleteModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="recordDeleteModalLabel"
+                                    data-th-text="#{button.label.delete_message}"></h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <label data-th-text="#{clientDetailPage.label.confirm_to_delete}"></label>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                        data-th-text="#{label.no}"></button>
+                                <form th:action="${add} ? @{/budget/2} : @{/budget/delete/{id}(id = ${budget.id})}"
+                                      th:object="${budget}" th:method="${add} ? 'GET' : 'POST'">
+                                    <button type="submit" class="btn btn-primary" data-th-text="#{label.yes}"></button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 </body>
 </html>
